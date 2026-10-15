@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080812">
+  <title>Moataz Emad | Official Website</title>
+
+  <!-- خط Cairo من جوجل -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- مكتبة الأيقونات الشهيرة (FontAwesome) عشان تطلع أيقونات السوشيال ميديا حقيقية -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --purple: #9b6dff;
+      --cyan: #54e8ff;
+      --white: #ffffff;
+      --muted: #b9b9cc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Cairo', sans-serif;
+      color: var(--white);
+      background: #080812;
+      overflow-x: hidden;
+    }
+
+    /* 🌟 شاشة الدخول السينمائية المتحركة */
+    #welcomeScreen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #18102e 0%, #05050a 100%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gateway-content {
+      position: relative;
+      background: rgba(20, 20, 35, 0.7);
+      border: 1px solid rgba(155, 109, 255, 0.4);
+      backdrop-filter: blur(25px);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(155, 109, 255, 0.2), inset 0 0 25px rgba(84, 232, 255, 0.08);
+      max-width: 450px;
+      width: 100%;
+      animation: bounceGateway 3s ease-in-out infinite alternate, glowPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes bounceGateway {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-8px) scale(1.01); }
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 30px rgba(155, 109, 255, 0.2); }
+      100% { box-shadow: 0 0 60px rgba(84, 232, 255, 0.4); }
+    }
+
+    .gateway-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(155, 109, 255, 0.15);
+      border: 1px solid rgba(155, 109, 255, 0.4);
+      border-radius: 20px;
+      color: #d8c8ff;
+      font-size: 12px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      animation: pulseTag 2s infinite;
+    }
+
+    @keyframes pulseTag {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    #welcomeScreen h2 {
+      font-size: 38px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 20%, #9b6dff 60%, #54e8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    #welcomeScreen p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 35px;
+    }
+
+    .enter-btn {
+      position: relative;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(110deg, #8050ff, #54e8ff);
+      color: #080812;
+      border: none;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(128,80,255,0.4);
+      transition: 0.4s;
+      overflow: hidden;
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 0 50px rgba(84, 232, 255, 0.8);
+    }
+
+    /* خلفية الفيديو */
+    .video-background {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      overflow: hidden;
+      background: #080812;
+    }
+
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(7, 7, 20, .65), rgba(7, 7, 20, .85)),
+                  linear-gradient(0deg, #080812 0%, transparent 55%, rgba(8, 8, 18, .4) 100%);
+    }
+
+    .glow {
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: .25;
+      z-index: -1;
+      pointer-events: none;
+      animation: moveGlow 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, -50px); }
+    }
+
+    .glow-one { background: var(--purple); top: 10%; right: -150px; }
+    .glow-two { background: #006eff; bottom: 0; left: -180px; animation-delay: 5s; }
+
+    /* الهيدر */
+    header {
+      width: min(1200px, 92%);
+      margin: auto;
+      padding: 25px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      animation: slideDown .8s ease both;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: white;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      direction: ltr;
+    }
+    .logo span { color: var(--purple); }
+
+    nav { display: flex; gap: 32px; }
+    nav a { color: #ddddea; text-decoration: none; font-size: 14px; transition: .3s; }
+    nav a:hover { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+
+    .header-btn {
+      text-decoration: none;
+      color: white;
+      border: 1px solid rgba(255,255,255,.3);
+      padding: 9px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      transition: .3s;
+    }
+    .header-btn:hover {
+      background: white;
+      color: #111;
+      box-shadow: 0 0 25px rgba(255,255,255,.3);
+    }
+
+    /* القسم الرئيسي */
+    .hero {
+      width: min(1200px, 92%);
+      min-height: 77vh;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      padding: 75px 0;
+    }
+
+    .hero-content {
+      max-width: 820px;
+      animation: fadeUp 1s .15s ease both;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(155,109,255,.4);
+      background: rgba(155,109,255,.10);
+      padding: 8px 17px;
+      border-radius: 50px;
+      color: #d8c8ff;
+      font-size: 12px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(12px);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #67ffb3;
+      box-shadow: 0 0 12px #67ffb3;
+      animation: blinkDot 1.5s infinite;
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      display: block;
+      direction: ltr;
+      text-align: right;
+      background: linear-gradient(100deg, #ffffff 5%, #bda0ff 40%, #65e8ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 28px rgba(155,109,255,.2));
+    }
+
+    .description {
+      max-width: 600px;
+      font-size: 16px;
+      line-height: 2.1;
+      color: var(--muted);
+      margin-bottom: 34px;
+    }
+
+    .buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .3s, box-shadow .3s, background .3s;
+    }
+    .btn:hover { transform: translateY(-4px); }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(110deg, #8050ff, #a77aff);
+      box-shadow: 0 8px 35px rgba(128,80,255,.3);
+    }
+    .btn-secondary {
+      color: white;
+      border: 1px solid rgba(255,255,255,.24);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(15px);
+    }
+
+    /* قسم السوشيال والحسابات */
+    .social-section {
+      width: min(1200px, 92%);
+      margin: 20px auto 60px;
+      padding: 40px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(12,12,30,.6);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .social-section h2 {
+      font-size: clamp(24px, 3.5vw, 32px);
+      margin-bottom: 30px;
+      text-align: center;
+      background: linear-gradient(to right, #9b6dff, #54e8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .social-card {
+      position: relative;
+      border-radius: 16px;
+      background: rgba(20, 20, 35, 0.7);
+      padding: 3px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+    }
+
+    .social-card::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(from 0deg, transparent 0deg, var(--purple) 90deg, var(--cyan) 180deg, transparent 270deg);
+      animation: rotateNeon 4s linear infinite;
+    }
+
+    @keyframes rotateNeon {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .social-card-inner {
+      position: relative;
+      background: #0d0d1a;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 1;
+      height: 100%;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .social-card:hover {
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    .social-card:hover .social-card-inner {
+      background: rgba(25, 25, 45, 0.95);
+    }
+
+    .social-icon {
+      font-size: 26px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(155, 109, 255, 0.12);
+      border-radius: 12px;
+      color: var(--cyan);
+      transition: 0.3s;
+    }
+
+    .social-card:hover .social-icon {
+      background: var(--purple);
+      color: white;
+      transform: rotate(10deg) scale(1.1);
+      box-shadow: 0 0 15px var(--purple);
+    }
+
+    .social-info h3 {
+      font-size: 16px;
+      color: white;
+      margin-bottom: 3px;
+    }
+
+    .social-info span {
+      font-size: 12px;
+      color: var(--muted);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .about {
+      width: min(1200px, 92%);
+      margin: 20px auto 100px;
+      padding: 40px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(12,12,30,.48);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      text-align: center;
+    }
+    .about h2 { font-size: clamp(25px, 4vw, 38px); margin-bottom: 15px; }
+    .about p { color: var(--muted); line-height: 2; max-width: 700px; margin: auto; }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: #9d9db1;
+      font-size: 12px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(35px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body id="home">
+
+  <!-- 🌟 شاشة الدخول السينمائية المتحركة -->
+  <div id="welcomeScreen">
+    <div class="gateway-content">
+      <div class="gateway-badge">SECURE PORTAL ✦ V2.6</div>
+      <h2>Moataz Emad</h2>
+      <p>hese are my social media accounts</p>
+      <button class="enter-btn" id="enterBtn">
+        <span> Start</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- خلفية الفيديو -->
+  <div class="video-background">
+    <video id="bgVideo" autoplay muted loop playsinline preload="auto">
+      <source src="./background.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="overlay"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <header>
+    <a href="#home" class="logo">MOATAZ<span>.</span></a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#socials">Socials</a>
+      <a href="#about"> About Me</a>
+    </nav>
+    <a href="#socials" class="header-btn">Contact Me  ↗</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="tag">
+          <span class="status-dot"></span>
+Hello👋        </div>
+
+        <h1>
+I'm Moataz
+          <span class="gradient-text"></span>
+        </h1>
+
+        <p class="description">
+          "A space that tells the story of my personality, passion, and ambition, and brings together all my accounts.
+        </p>
+
+        <div class="buttons">
+          <a href="#socials" class="btn btn-primary"> Browse my accounts <span>↙</span></a>
+          <a href="#about" class="btn btn-secondary"> "About Moataz" <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم الحسابات والأيقونات الحقيقية مع نيون متحرك -->
+    <section class="social-section" id="socials">
+      <h2>   My Official Accounts & Platforms </h2>
+      <div class="social-grid">
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/qr/JWHOGZ6GWVLXB1" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div class="social-info">
+              <h3>WhatsApp</h3>
+              <span>تواصل مباشر</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/share/1AuSYSXqzG/" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-facebook"></i></div>
+            <div class="social-info">
+              <h3>Facebook</h3>
+              <span>الملف الشخصي</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Discord -->
+        <a href="https://discord.com" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-discord"></i></div>
+            <div class="social-info">
+              <h3>Discord</h3>
+              <span>3mkangelo</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/moataz_emad_26?obrf=MWV4eWI4YWtpaWszNA%3D%3D" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-instagram"></i></div>
+            <div class="social-info">
+              <h3>Instagram</h3>
+              <span>@moataz_emad_26</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@3m_moataz" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-tiktok"></i></div>
+            <div class="social-info">
+              <h3>TikTok</h3>
+              <span>@3m_moataz</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Steam -->
+        <a href="https://steamcommunity.com/profiles/76561199382673502/" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-steam"></i></div>
+            <div class="social-info">
+              <h3>Steam Profile</h3>
+              <span>زيارة الملف</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Spotify -->
+        <a href="https://open.spotify.com/user/31rz5cz5yv2pmottvhg2xoraco5q?si=eQiB-lI8R-yb-cT5SmJq5g&utm_source=copy-link" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-spotify"></i></div>
+            <div class="social-info">
+              <h3>Spotify</h3>
+              <span>تشغيل الأغاني</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- PayPal -->
+        <a href="https://paypal.me/AbdullahEmad699" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-paypal"></i></div>
+            <div class="social-info">
+              <h3>PayPal</h3>
+              <span>هات اي حاجه</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Snapchat -->
+        <a href="https://www.snapchat.com/add/moataz19588?share_id=jYHeNcvDGxE&locale=ar-EG-u-nu-latn" target="_blank" class="social-card">
+          <div class="social-card-inner">
+            <div class="social-icon"><i class="fa-brands fa-snapchat"></i></div>
+            <div class="social-info">
+              <h3>Snapchat</h3>
+              <span>moataz19588</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <h2>Every detail has a story</h2>
+      <p>
+        Moataz Emad from Giza, Egypt, has a great passion for gaming and digital platforms.
+         He is ambitious, focused, and currently working hard to master the English language at
+          the British Council."
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 MOATAZ EMAD — MADE WITH PASSION
+  </footer>
+
+  <script>
+    const video = document.getElementById("bgVideo");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const enterBtn = document.getElementById("enterBtn");
+
+    enterBtn.addEventListener("click", async () => {
+      // إعادة الصفحة للأعلى تماماً فور الضغط
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // تأثير سينمائي لاختفاء البوابة
+      welcomeScreen.style.opacity = '0';
+      welcomeScreen.style.transform = 'scale(1.08)';
+      setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+      }, 800);
+
+      // تشغيل الفيديو والصوت فوراً
+      try {
+        video.muted = false;
+        video.volume = 1;
+        await video.play();
+      } catch (error) {
+        console.log("Play error:", error);
+      }
+    });
+  </script>
+
+</body>
+</html>
